@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sqflite_flutter/features/note/data/repo/sqflite_repo_impl.dart';
 
 import '../../../data/models/text_field_model.dart';
+import 'custom_button.dart';
 import 'custom_text_field.dart';
 
 class AddNoteViewBody extends StatelessWidget {
@@ -20,7 +22,9 @@ class AddNoteViewBody extends StatelessWidget {
               textFieldModel: TextFieldModel(
                   hintText: "value", controller: TextEditingController())),
           const SizedBox(height: 32),
-          ElevatedButton(onPressed: () {}, child: const Text("Add Note"))
+          CustomButton(onTap: () async {
+           await SqfliteRepoImpl().initSqfliteDB();
+          })
         ],
       ),
     );
