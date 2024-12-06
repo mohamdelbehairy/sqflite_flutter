@@ -14,6 +14,9 @@ final class DeleteNoteSuccess extends NoteState {}
 
 final class UpdateNoteSuccess extends NoteState {}
 
+final class DeleteAllNotesSuccess extends NoteState {}
+
+
 final class NoteFailure extends NoteState {
   final String errorMessage;
 

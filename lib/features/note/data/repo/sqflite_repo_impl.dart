@@ -62,4 +62,11 @@ class SqfliteRepoImpl extends SqfliteRepo {
     Database? db = await _getDb();
     return await db!.rawDelete("DELETE FROM 'notes' WHERE id = $noteID");
   }
+
+  @override
+  Future<void> deleteAllNotes() async {
+    var databasePath = await getDatabasesPath();
+    String path = join(databasePath, 'mohamed.db');
+    await deleteDatabase(path);
+  }
 }

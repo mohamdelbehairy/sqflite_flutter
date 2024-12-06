@@ -58,11 +58,21 @@ class NoteCubit extends Cubit<NoteState> {
       if (result > 0) {
         await _getNote();
       }
-
       emit(UpdateNoteSuccess());
     } catch (e) {
       emit(NoteFailure(errorMessage: e.toString()));
       log("error from update note: $e");
+    }
+  }
+
+  Future<void> deleteAllNotes() async {
+    try {
+      await _sqfliteRepo.deleteAllNotes();
+      notes.clear();
+      emit(DeleteAllNotesSuccess());
+    } catch (e) {
+      emit(NoteFailure(errorMessage: e.toString()));
+      log("error from delete all notes: $e");
     }
   }
 

@@ -5,4 +5,5 @@ abstract class SqfliteRepo {
   Future<List<Map>> getNote(String table);
   Future<int> updateNote(NoteModel note);
   Future<int> deleteNote(int noteID);
+  Future<void> deleteAllNotes();
 }
