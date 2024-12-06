@@ -52,6 +52,20 @@ class NoteCubit extends Cubit<NoteState> {
     }
   }
 
+  Future<void> updateNote({required NoteModel note}) async {
+    try {
+      int result = await _sqfliteRepo.updateNote(note);
+      if (result > 0) {
+        await _getNote();
+      }
+
+      emit(UpdateNoteSuccess());
+    } catch (e) {
+      emit(NoteFailure(errorMessage: e.toString()));
+      log("error from update note: $e");
+    }
+  }
+
   @override
   void onChange(Change<NoteState> change) {
     log("change: $change");

@@ -46,9 +46,15 @@ class SqfliteRepoImpl extends SqfliteRepo {
   }
 
   @override
-  Future<int> updateNote(String sql) async {
+  Future<int> updateNote(NoteModel note) async {
     Database? db = await _getDb();
-    return await db!.rawUpdate(sql);
+    log(note.id.toString());
+    return await db!.rawUpdate('''
+        UPDATE notes SET 
+        title = "${note.title}",
+        value = "${note.value}" 
+        WHERE id = ${note.id}
+      ''');
   }
 
   @override
