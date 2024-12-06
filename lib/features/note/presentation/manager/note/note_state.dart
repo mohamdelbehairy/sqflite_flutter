@@ -8,6 +8,8 @@ final class NoteLoading extends NoteState {}
 
 final class AddNoteSuccess extends NoteState {}
 
+final class GetNoteSuccess extends NoteState {}
+
 final class NoteFailure extends NoteState {
   final String errorMessage;
 

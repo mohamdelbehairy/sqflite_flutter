@@ -1,5 +1,5 @@
 class NoteModel {
-  String? id;
+  int? id;
   final String title, value;
 
   NoteModel({this.id, required this.title, required this.value});

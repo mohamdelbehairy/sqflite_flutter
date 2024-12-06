@@ -8,18 +8,34 @@ import '../../../data/repo/sqflite_repo.dart';
 part 'note_state.dart';
 
 class NoteCubit extends Cubit<NoteState> {
-  NoteCubit(this._sqfliteRepo) : super(NoteInitial());
+  NoteCubit(this._sqfliteRepo) : super(NoteInitial()) {
+    _getNote();
+  }
   final SqfliteRepo _sqfliteRepo;
 
+  List<NoteModel> notes = [];
   Future<void> addNote({required NoteModel note}) async {
     emit(NoteLoading());
     try {
       int result = await _sqfliteRepo.addNote(note);
-      log(result.toString());
+      if (result > 0) {
+        await _getNote();
+      }
       emit(AddNoteSuccess());
     } catch (e) {
       emit(NoteFailure(errorMessage: e.toString()));
       log("error from add note: $e");
+    }
+  }
+
+  Future<void> _getNote() async {
+    try {
+      List<Map> data = await _sqfliteRepo.getNote("notes");
+      notes = data.map((e) => NoteModel.fromDb(e)).toList();
+      emit(GetNoteSuccess());
+    } catch (e) {
+      emit(NoteFailure(errorMessage: e.toString()));
+      log("error from get note: $e");
     }
   }
 

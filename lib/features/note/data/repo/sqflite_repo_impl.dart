@@ -40,9 +40,9 @@ class SqfliteRepoImpl extends SqfliteRepo {
   }
 
   @override
-  Future<List<Map>> getNote(String sql) async {
+  Future<List<Map>> getNote(String table) async {
     Database? db = await _getDb();
-    return await db!.rawQuery(sql);
+    return await db!.rawQuery("SELECT * FROM '$table'");
   }
 
   @override
