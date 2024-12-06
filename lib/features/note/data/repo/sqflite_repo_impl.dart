@@ -69,4 +69,38 @@ class SqfliteRepoImpl extends SqfliteRepo {
     String path = join(databasePath, 'mohamed.db');
     await deleteDatabase(path);
   }
+
+  @override
+  Future<int> add(NoteModel note) async {
+    Database? db = await _getDb();
+    return await db!.insert("notes", {
+      'title': note.title,
+      'value': note.value,
+    });
+  }
+
+  @override
+  Future<List<Map>> get(String table) async {
+    Database? db = await _getDb();
+    return await db!.query(table);
+  }
+
+  @override
+  Future<int> delete(int noteID) async {
+    Database? db = await _getDb();
+    return await db!.delete("notes", where: "id = $noteID");
+  }
+
+  @override
+  Future<int> update(NoteModel note) async {
+    Database? db = await _getDb();
+
+    return await db!.update(
+        "notes",
+        {
+          'title': note.title,
+          'value': note.value,
+        },
+        where: "id = ${note.id}");
+  }
 }

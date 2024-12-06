@@ -17,7 +17,8 @@ class NoteCubit extends Cubit<NoteState> {
   Future<void> addNote({required NoteModel note}) async {
     emit(NoteLoading());
     try {
-      int result = await _sqfliteRepo.addNote(note);
+      // int result = await _sqfliteRepo.addNote(note);
+      int result = await _sqfliteRepo.add(note);
       if (result > 0) {
         await _getNote();
       }
@@ -30,7 +31,8 @@ class NoteCubit extends Cubit<NoteState> {
 
   Future<void> _getNote() async {
     try {
-      List<Map> data = await _sqfliteRepo.getNote("notes");
+      // List<Map> data = await _sqfliteRepo.getNote("notes");
+      List<Map> data = await _sqfliteRepo.get("notes");
       notes = data.map((e) => NoteModel.fromDb(e)).toList();
       emit(GetNoteSuccess());
     } catch (e) {
@@ -41,7 +43,8 @@ class NoteCubit extends Cubit<NoteState> {
 
   Future<void> deleteNote({required int noteID}) async {
     try {
-      int result = await _sqfliteRepo.deleteNote(noteID);
+      // int result = await _sqfliteRepo.deleteNote(noteID);
+      int result = await _sqfliteRepo.delete(noteID);
       if (result > 0) {
         await _getNote();
       }
@@ -54,7 +57,8 @@ class NoteCubit extends Cubit<NoteState> {
 
   Future<void> updateNote({required NoteModel note}) async {
     try {
-      int result = await _sqfliteRepo.updateNote(note);
+      // int result = await _sqfliteRepo.updateNote(note);
+       int result = await _sqfliteRepo.update(note);
       if (result > 0) {
         await _getNote();
       }
