@@ -52,8 +52,8 @@ class SqfliteRepoImpl extends SqfliteRepo {
   }
 
   @override
-  Future<int> deleteNote(String sql) async {
+  Future<int> deleteNote(int noteID) async {
     Database? db = await _getDb();
-    return await db!.rawDelete(sql);
+    return await db!.rawDelete("DELETE FROM 'notes' WHERE id = $noteID");
   }
 }
